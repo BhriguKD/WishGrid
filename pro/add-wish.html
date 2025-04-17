@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add New Wish - WishGrid</title>
+    <link href="../src/output.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
+      body {
+        font-family: "Inter", sans-serif;
+        background: #f0f0f0;
+      }
+      .neu-shadow {
+        box-shadow: 8px 8px 0px #000;
+      }
+      .neu-button {
+        transition: all 0.2s ease;
+        box-shadow: 8px 8px 0px #000;
+        border: 4px solid #000;
+      }
+      .neu-button:hover {
+        transform: translate(2px, 2px);
+        box-shadow: 4px 4px 0px #000;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white border-b-4 border-black py-4">
+      <div class="container mx-auto px-4 flex justify-between items-center">
+        <div class="flex items-center">
+          <i class="fas fa-gift text-purple-600 text-2xl mr-2"></i>
+          <h1 class="text-2xl font-bold text-gray-800">WishGrid</h1>
+        </div>
+        <!-- Desktop Menu -->
+        <div class="hidden md:flex space-x-6 font-bold">
+          <a href="index.html" class="hover:text-purple-600">Home</a>
+          <a href="dashboard.html" class="hover:text-purple-600 auth-required"
+            >Dashboard</a
+          >
+          <a href="completed.html" class="hover:text-purple-600 auth-required"
+            >Completed</a
+          >
+          <a href="about.html" class="hover:text-purple-600">About</a>
+          <a href="settings.html" class="hover:text-purple-600 auth-required"
+            >Settings</a
+          >
+          <button id="logoutButton" class="auth-required hover:text-purple-600">
+            Logout
+          </button>
+        </div>
+        <!-- Mobile Menu Button -->
+        <div class="md:hidden">
+          <button
+            id="mobile-menu-button"
+            class="text-gray-800 hover:text-purple-600 focus:outline-none"
+          >
+            <i class="fas fa-bars text-xl"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Menu Panel -->
+      <div id="mobile-menu" class="hidden md:hidden">
+        <div
+          class="px-4 pt-2 pb-3 space-y-3 bg-white border-t-2 border-gray-200"
+        >
+          <a
+            href="index.html"
+            class="block py-2 text-base font-bold hover:text-purple-600"
+            >Home</a
+          >
+          <a
+            href="dashboard.html"
+            class="block py-2 text-base font-bold hover:text-purple-600 auth-required"
+            >Dashboard</a
+          >
+          <a
+            href="completed.html"
+            class="block py-2 text-base font-bold hover:text-purple-600 auth-required"
+            >Completed</a
+          >
+          <a
+            href="about.html"
+            class="block py-2 text-base font-bold hover:text-purple-600"
+            >About</a
+          >
+          <a
+            href="settings.html"
+            class="block py-2 text-base font-bold hover:text-purple-600 auth-required"
+            >Settings</a
+          >
+          <button
+            id="logoutButtonMobile"
+            class="block py-2 text-base font-bold hover:text-purple-600 auth-required"
+          >
+            Logout
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Form Header -->
+    <div class="bg-blue-600 text-white py-8 border-b-4 border-black">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold mb-2" id="form-title">Add New Wish</h2>
+        <p class="text-purple-100">Fill in the details about your new wish</p>
+      </div>
+    </div>
+
+    <!-- Form Container -->
+    <div class="container mx-auto px-4 py-8">
+      <div
+        class="bg-white neu-shadow p-6 md:p-8 max-w-3xl mx-auto border-4 border-black"
+      >
+        <form id="wish-form">
+          <!-- Hidden ID field for edit mode -->
+          <input type="hidden" id="wish-id" />
+
+          <!-- Basic Info -->
+          <div class="mb-6">
+            <label for="name" class="block text-gray-700 font-medium mb-2"
+              >Wish Name *</label
+            >
+            <input
+              type="text"
+              id="name"
+              name="name"
+              required
+              class="w-full border-4 border-black px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent neu-shadow"
+              placeholder="e.g. MacBook Pro, Running Shoes, etc."
+            />
+          </div>
+
+          <div class="mb-6">
+            <label
+              for="description"
+              class="block text-gray-700 font-medium mb-2"
+              >Description</label
+            >
+            <textarea
+              id="description"
+              name="description"
+              rows="3"
+              class="w-full border-4 border-black px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent neu-shadow"
+              placeholder="Add details about your wish..."
+            ></textarea>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div>
+              <label for="price" class="block text-gray-700 font-medium mb-2"
+                >Price *</label
+              >
+              <div class="relative">
+                <div class="absolute left-3 top-2.5 text-gray-500">$</div>
+                <input
+                  type="number"
+                  id="price"
+                  name="price"
+                  min="0"
+                  step="0.01"
+                  required
+                  class="w-full border-4 border-black pl-8 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent neu-shadow"
+                  placeholder="0.00"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label for="category" class="block text-gray-700 font-medium mb-2"
+                >Category *</label
+              >
+              <select
+                id="category"
+                name="category"
+                required
+                class="w-full border-4 border-black px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent neu-shadow"
+              >
+                <option value="" disabled selected>Select a category</option>
+                <option value="Tech">Tech</option>
+                <option value="Clothes">Clothes</option>
+                <option value="Books">Books</option>
+                <option value="Home">Home</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="mb-6">
+            <label class="block text-gray-700 font-medium mb-2"
+              >Priority *</label
+            >
+            <div class="flex flex-wrap gap-4">
+              <label class="inline-flex items-center cursor-pointer">
+                <input
+                  type="radio"
+                  name="priority"
+                  value="Low"
+                  class="sr-only peer"
+                  required
+                />
+                <div
+                  class="w-10 h-10 rounded-full bg-green-100 text-green-500 flex items-center justify-center border-4 border-black neu-shadow peer-checked:border-green-500"
+                >
+                  <i class="fas fa-arrow-down"></i>
+                </div>
+                <span class="ml-2 text-gray-700">Low</span>
+              </label>
+
+              <label class="inline-flex items-center cursor-pointer">
+                <input
+                  type="radio"
+                  name="priority"
+                  value="Medium"
+                  class="sr-only peer"
+                  checked
+                />
+                <div
+                  class="w-10 h-10 rounded-full bg-yellow-100 text-yellow-500 flex items-center justify-center border-4 border-black neu-shadow peer-checked:border-yellow-500"
+                >
+                  <i class="fas fa-minus"></i>
+                </div>
+                <span class="ml-2 text-gray-700">Medium</span>
+              </label>
+
+              <label class="inline-flex items-center cursor-pointer">
+                <input
+                  type="radio"
+                  name="priority"
+                  value="High"
+                  class="sr-only peer"
+                />
+                <div
+                  class="w-10 h-10 rounded-full bg-red-100 text-red-500 flex items-center justify-center border-4 border-black neu-shadow peer-checked:border-red-500"
+                >
+                  <i class="fas fa-arrow-up"></i>
+                </div>
+                <span class="ml-2 text-gray-700">High</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Additional Fields -->
+          <div class="mb-6">
+            <label for="image-url" class="block text-gray-700 font-medium mb-2"
+              >Image URL (optional)</label
+            >
+            <input
+              type="url"
+              id="image-url"
+              name="image_url"
+              class="w-full border-4 border-black px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent neu-shadow"
+              placeholder="https://example.com/image.jpg"
+            />
+            <p class="text-gray-500 text-sm mt-1">
+              Add a link to an image of your wish
+            </p>
+          </div>
+
+          <div class="mb-8">
+            <label for="item-link" class="block text-gray-700 font-medium mb-2"
+              >Item Link (optional)</label
+            >
+            <input
+              type="url"
+              id="item-link"
+              name="item_link"
+              class="w-full border-4 border-black px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent neu-shadow"
+              placeholder="https://example.com/product"
+            />
+            <p class="text-gray-500 text-sm mt-1">
+              Link to where this item can be purchased
+            </p>
+          </div>
+
+          <!-- Form Buttons -->
+          <div class="flex flex-col sm:flex-row justify-end gap-4">
+            <a
+              href="dashboard.html"
+              class="neu-button py-2 px-6 bg-gray-200 hover:bg-gray-300 text-gray-800 text-center"
+              >Cancel</a
+            >
+            <button
+              type="submit"
+              class="neu-button py-2 px-6 bg-purple-600 hover:bg-purple-700 text-white"
+            >
+              Save Wish
+            </button>
+          </div>
+        </form>
+
+        <!-- Alert for success/errors -->
+        <div
+          id="alert"
+          class="hidden mt-6 p-4 border-4 border-black neu-shadow"
+        ></div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white py-10 border-t-4 border-black">
+      <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row justify-between">
+          <div class="mb-6 md:mb-0">
+            <div class="flex items-center">
+              <i class="fas fa-gift text-purple-400 text-2xl mr-2"></i>
+              <h2 class="text-xl font-bold">WishGrid</h2>
+            </div>
+            <p class="text-gray-400 mt-2">
+              Track your wishes, organize your future
+            </p>
+          </div>
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
+            <div>
+              <h3 class="text-lg font-semibold mb-4">Pages</h3>
+              <ul class="space-y-2">
+                <li>
+                  <a href="index.html" class="hover:text-white text-gray-400"
+                    >Home</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="dashboard.html"
+                    class="hover:text-white text-gray-400"
+                    >Dashboard</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="completed.html"
+                    class="hover:text-white text-gray-400"
+                    >Completed</a
+                  >
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="text-lg font-semibold mb-4">More</h3>
+              <ul class="space-y-2">
+                <li>
+                  <a href="about.html" class="hover:text-white text-gray-400"
+                    >About</a
+                  >
+                </li>
+                <li>
+                  <a href="settings.html" class="hover:text-white text-gray-400"
+                    >Settings</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div
+          class="mt-10 pt-6 border-t border-gray-700 text-center text-gray-400"
+        >
+          <p>&copy; 2025 WishGrid. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../js/base-template.js"></script>
+    <script src="../js/theme.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/login.js"></script>
+    <script src="../js/add-wish.js"></script>
+  </body>
+</html>

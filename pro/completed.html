@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Completed Wishes - WishGrid</title>
+    <link href="../src/output.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
+      body {
+        font-family: "Inter", sans-serif;
+        background: #f0f0f0;
+      }
+      .neu-shadow {
+        box-shadow: 8px 8px 0px #000;
+      }
+      .neu-button {
+        transition: all 0.2s ease;
+        box-shadow: 8px 8px 0px #000;
+        border: 4px solid #000;
+      }
+      .neu-button:hover {
+        transform: translate(2px, 2px);
+        box-shadow: 4px 4px 0px #000;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white border-b-4 border-black py-4">
+      <div class="container mx-auto px-4 flex justify-between items-center">
+        <div class="flex items-center">
+          <i class="fas fa-gift text-purple-600 text-2xl mr-2"></i>
+          <h1 class="text-2xl font-bold text-gray-800">WishGrid</h1>
+        </div>
+        <!-- Desktop Menu -->
+        <div class="hidden md:flex space-x-6 font-bold">
+          <a href="index.html" class="hover:text-purple-600">Home</a>
+          <a href="dashboard.html" class="hover:text-purple-600 auth-required"
+            >Dashboard</a
+          >
+          <a href="completed.html" class="text-purple-600 auth-required"
+            >Completed</a
+          >
+          <a href="about.html" class="hover:text-purple-600">About</a>
+          <a href="settings.html" class="hover:text-purple-600 auth-required"
+            >Settings</a
+          >
+          <button id="logoutButton" class="auth-required hover:text-purple-600">
+            Logout
+          </button>
+        </div>
+        <!-- Mobile Menu Button -->
+        <div class="md:hidden">
+          <button
+            id="mobile-menu-button"
+            class="text-gray-800 hover:text-purple-600 focus:outline-none"
+          >
+            <i class="fas fa-bars text-xl"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Menu Panel -->
+      <div id="mobile-menu" class="hidden md:hidden">
+        <div
+          class="px-4 pt-2 pb-3 space-y-3 bg-white border-t-2 border-gray-200"
+        >
+          <a
+            href="index.html"
+            class="block py-2 text-base font-bold hover:text-purple-600"
+            >Home</a
+          >
+          <a
+            href="dashboard.html"
+            class="block py-2 text-base font-bold hover:text-purple-600 auth-required"
+            >Dashboard</a
+          >
+          <a
+            href="completed.html"
+            class="block py-2 text-base font-bold text-purple-600 auth-required"
+            >Completed</a
+          >
+          <a
+            href="about.html"
+            class="block py-2 text-base font-bold hover:text-purple-600"
+            >About</a
+          >
+          <a
+            href="settings.html"
+            class="block py-2 text-base font-bold hover:text-purple-600 auth-required"
+            >Settings</a
+          >
+          <button
+            id="logoutButtonMobile"
+            class="block py-2 text-base font-bold hover:text-purple-600 auth-required"
+          >
+            Logout
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Completed Wishes Header -->
+    <div class="bg-green-600 text-white py-8 border-b-4 border-black">
+      <div class="container mx-auto px-4">
+        <div
+          class="flex flex-col md:flex-row md:justify-between md:items-center"
+        >
+          <div>
+            <h2 class="text-3xl font-bold mb-2">Completed Wishes</h2>
+            <p class="text-green-100">Items you've already acquired</p>
+          </div>
+          <div class="mt-4 md:mt-0">
+            <a
+              href="dashboard.html"
+              class="neu-button bg-white text-green-600 px-6 py-3 rounded-lg font-bold"
+            >
+              <i class="fas fa-arrow-left mr-2"></i> Back to Dashboard
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filter and Search Bar -->
+    <div class="container mx-auto px-4 py-6">
+      <div
+        class="bg-white rounded-xl border-4 border-black p-4 mb-8"
+      >
+        <div
+          class="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0"
+        >
+          <!-- Search -->
+          <div class="relative md:w-1/3">
+            <input
+              type="text"
+              id="search"
+              placeholder="Search completed wishes..."
+              class="w-full pl-10 pr-4 py-2 border-2 border-black rounded-lg focus:outline-none"
+            />
+            <div class="absolute left-3 top-2.5 text-gray-400">
+              <i class="fas fa-search"></i>
+            </div>
+          </div>
+
+          <!-- Filters -->
+          <div class="flex flex-wrap gap-2">
+            <select
+              id="category-filter"
+              class="border-2 border-black rounded-lg px-4 py-2 focus:outline-none"
+            >
+              <option value="">All Categories</option>
+              <option value="Tech">Tech</option>
+              <option value="Clothes">Clothes</option>
+              <option value="Books">Books</option>
+              <option value="Home">Home</option>
+              <option value="Other">Other</option>
+            </select>
+
+            <select
+              id="sort-by"
+              class="border-2 border-black rounded-lg px-4 py-2 focus:outline-none"
+            >
+              <option value="newest">Newest First</option>
+              <option value="oldest">Oldest First</option>
+              <option value="price-high">Price: High to Low</option>
+              <option value="price-low">Price: Low to High</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Completed Wish Grid -->
+    <div class="container mx-auto px-4 pb-12">
+      <!-- Wishes Container -->
+      <div
+        id="completed-wishes-container"
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+      ></div>
+
+      <!-- Empty State -->
+      <div id="empty-state" class="hidden py-16 text-center">
+        <div
+          class="bg-white rounded-2xl neu-shadow border-4 border-black p-8 max-w-lg mx-auto"
+        >
+          <div class="text-gray-400 mb-4">
+            <i class="fas fa-check-circle text-6xl"></i>
+          </div>
+          <h3 class="text-2xl font-bold text-gray-800 mb-2">
+            No completed wishes yet
+          </h3>
+          <p class="text-gray-600 mb-6">
+            When you mark wishes as completed, they'll appear here.
+          </p>
+          <a
+            href="dashboard.html"
+            class="neu-button bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg"
+            >Return to Dashboard</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white py-10 border-t-4 border-black">
+      <div class="container mx-auto px-4 text-center">
+        <div class="flex items-center justify-center mb-4">
+          <i class="fas fa-gift text-purple-400 text-2xl mr-2"></i>
+          <h2 class="text-xl font-bold">WishGrid</h2>
+        </div>
+        <p class="text-gray-400">&copy; 2025 WishGrid. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../js/base-template.js"></script>
+    <script src="../js/theme.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/login.js"></script>
+    <script src="../js/completed.js"></script>
+    <script src="../js/mobile-menu.js"></script>
+  </body>
+</html>

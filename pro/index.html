@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WishGrid - Track Your Wishes</title>
+    <link href="../src/output.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
+      body {
+        font-family: "Inter", sans-serif;
+        background: #f0f0f0;
+      }
+      .neu-shadow {
+        box-shadow: 8px 8px 0px #000;
+      }
+      .neu-button {
+        transition: all 0.2s ease;
+        box-shadow: 8px 8px 0px #000;
+        border: 4px solid #000;
+      }
+      .neu-button:hover {
+        transform: translate(2px, 2px);
+        box-shadow: 4px 4px 0px #000;
+      }
+
+      /* Rotating Element */
+      .rotating-element {
+        position: absolute;
+        animation: rotate 5s linear infinite;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+      }
+
+      .rotating-element:hover {
+        animation-play-state: paused;
+      }
+
+      @keyframes rotate {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Floating Element */
+      .floating-element {
+        position: absolute;
+        animation: float 6s ease-in-out infinite;
+      }
+
+      @keyframes float {
+        0% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-20px);
+        }
+        100% {
+          transform: translateY(0px);
+        }
+      }
+
+      /* Bouncing Elements */
+      .bouncing-element {
+        position: absolute;
+        animation: bounce 3s ease infinite;
+      }
+
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-30px);
+        }
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 0.2;
+        }
+        50% {
+          transform: scale(1.2);
+          opacity: 0.3;
+        }
+      }
+
+      /* Feature Card Animation */
+      .feature-card {
+        transition: transform 0.3s ease;
+      }
+
+      .feature-card:hover {
+        transform: rotate(5deg) scale(1.05);
+      }
+
+      /* Infinite scroll animation */
+      .emoji-scroll-container {
+        overflow: hidden;
+        white-space: nowrap;
+        position: relative;
+        background: white;
+        border-top: 4px solid black;
+        border-bottom: 4px solid black;
+        padding: 20px 0;
+        margin: 40px 0;
+      }
+
+      .emoji-scroll {
+        display: inline-block;
+        animation: scroll 20s linear infinite;
+        white-space: nowrap;
+      }
+
+      .emoji-scroll:hover {
+        animation-play-state: paused;
+      }
+
+      .emoji-item {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+        margin: 0 20px;
+        background: white;
+        border: 4px solid black;
+        border-radius: 12px;
+        width: 100px;
+        height: 100px;
+        box-shadow: 8px 8px 0px #000;
+        transition: all 0.2s ease;
+      }
+
+      .emoji-item:hover {
+        transform: translate(2px, 2px);
+        box-shadow: 4px 4px 0px #000;
+      }
+
+      @keyframes scroll {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
+      }
+
+      body.overflow-hidden {
+        overflow: hidden;
+      }
+
+      /* Smooth overlay transition */
+      #loginOverlay {
+        transition: opacity 0.3s ease;
+        opacity: 0;
+      }
+      #loginOverlay.flex {
+        opacity: 1;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white border-b-4 border-black py-4">
+      <div class="container mx-auto px-4 flex justify-between items-center">
+        <div class="flex items-center">
+          <i class="fas fa-gift text-purple-600 text-2xl mr-2"></i>
+          <h1 class="text-2xl font-bold text-gray-800">WishGrid</h1>
+        </div>
+        <!-- Desktop Menu -->
+        <div class="hidden md:flex space-x-6 font-bold">
+          <a href="index.html" class="text-purple-600">Home</a>
+          <a href="dashboard.html" class="hover:text-purple-600">Dashboard</a>
+          <a href="completed.html" class="hover:text-purple-600">Completed</a>
+          <a href="about.html" class="hover:text-purple-600">About</a>
+          <a href="settings.html" class="hover:text-purple-600">Settings</a>
+          <button id="logoutButton" class="hidden hover:text-purple-600">
+            Logout
+          </button>
+          <button id="register" class="login-trigger hover:text-purple-600">
+            Login
+          </button>
+        </div>
+        <!-- Mobile Menu Button -->
+        <div class="md:hidden">
+          <button
+            id="mobile-menu-button"
+            class="text-gray-800 hover:text-purple-600 focus:outline-none"
+          >
+            <i class="fas fa-bars text-xl"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Menu Panel -->
+      <div id="mobile-menu" class="hidden md:hidden">
+        <div
+          class="px-4 pt-2 pb-3 space-y-3 bg-white border-t-2 border-gray-200"
+        >
+          <a
+            href="index.html"
+            class="block py-2 text-base font-bold text-purple-600"
+            >Home</a
+          >
+          <a
+            href="dashboard.html"
+            class="block py-2 text-base font-bold hover:text-purple-600"
+            >Dashboard</a
+          >
+          <a
+            href="completed.html"
+            class="block py-2 text-base font-bold hover:text-purple-600"
+            >Completed</a
+          >
+          <a
+            href="about.html"
+            class="block py-2 text-base font-bold hover:text-purple-600"
+            >About</a
+          >
+          <a
+            href="settings.html"
+            class="block py-2 text-base font-bold hover:text-purple-600"
+            >Settings</a
+          >
+          <button
+            id="logoutButtonMobile"
+            class="block py-2 text-base font-bold hover:text-purple-600 hidden"
+          >
+            Logout
+          </button>
+          <button
+            class="login-trigger block py-2 text-base font-bold hover:text-purple-600"
+          >
+            Login
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="py-20 relative bg-amber-300">
+      <!-- Decorative Elements -->
+      <div
+        class="rotating-element"
+        style="top: 5%; left: 5%; width: 80px; height: 80px"
+      >
+        <i class="fas fa-star-of-life text-green-600 text-7xl"></i>
+      </div>
+      <div
+        class="floating-element"
+        style="bottom: 2%; right: 10%; width: 60px; height: 60px"
+      >
+        <i class="fas fa-heart text-pink-600 text-5xl"></i>
+      </div>
+
+      <div
+        class="container mx-auto px-4 flex flex-col-reverse md:flex-row items-center"
+      >
+        <div class="md:w-1/2 mt-10 md:mt-0 space-y-6">
+          <h2 class="text-4xl font-bold text-gray-800 leading-tight">
+            Organize Your Wishlist,<br />
+            <span class="text-purple-600">Visualize Your Dreams</span>
+          </h2>
+          <p class="text-gray-700 text-lg">
+            Keep track of all your wishes in one place.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4">
+            <a
+              href="dashboard.html"
+              class="neu-button bg-purple-600 text-white px-6 py-3 rounded-lg text-center"
+              >Get Started</a
+            >
+            <a
+              href="#register"
+              class="neu-button bg-indigo-400 text-white rounded-lg block py-3 px-6 font-bold hover:bg-indigo-600"
+            >
+              Login Now
+            </a>
+            <script></script>
+            <a
+              href="about.html"
+              class="neu-button bg-white text-purple-600 px-6 py-3 rounded-lg text-center"
+              >Learn More</a
+            >
+          </div>
+        </div>
+        <div class="md:w-1/2 hero-image-container">
+          <div
+            class="border-4 border-black rounded-xl neu-shadow overflow-hidden"
+          >
+            <img
+              src="../assets/images/hero-image.png"
+              alt="WishGrid Dashboard"
+              class="w-full h-auto"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Emoji Scroll Section -->
+    <div class="emoji-scroll-container">
+      <div class="emoji-scroll">
+        <div class="emoji-item">🤪</div>
+        <div class="emoji-item">👀</div>
+        <div class="emoji-item">✨</div>
+        <div class="emoji-item">🫠</div>
+        <div class="emoji-item">💅</div>
+        <div class="emoji-item">🫶</div>
+        <div class="emoji-item">🤙</div>
+        <div class="emoji-item">🤑</div>
+        <div class="emoji-item">🤸‍♀️</div>
+        <div class="emoji-item">🧚‍♂️</div>
+        <div class="emoji-item">🦄</div>
+        <div class="emoji-item">🍃</div>
+        <div class="emoji-item">🍄</div>
+        <div class="emoji-item">🫡</div>
+        <div class="emoji-item">🤪</div>
+        <div class="emoji-item">👀</div>
+        <div class="emoji-item">✨</div>
+        <div class="emoji-item">🫠</div>
+        <div class="emoji-item">💅</div>
+        <div class="emoji-item">🫶</div>
+        <div class="emoji-item">🤙</div>
+        <div class="emoji-item">🤑</div>
+        <div class="emoji-item">🤸‍♀️</div>
+        <div class="emoji-item">🧚‍♂️</div>
+        <div class="emoji-item">🦄</div>
+        <div class="emoji-item">🍃</div>
+        <div class="emoji-item">🍄</div>
+        <div class="emoji-item">🫡</div>
+      </div>
+    </div>
+
+    <!-- Features Section -->
+    <section class="py-20 bg-white border-t-4 border-black">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-12">
+          Why Choose WishGrid?
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div
+            class="feature-card bg-indigo-400 text-white rounded-2xl neu-shadow p-6 border-4 border-black"
+          >
+            <div class="text-4xl mb-4 text-white">
+              <i class="fas fa-list-check"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-2">Organized Wishes</h3>
+            <p class="text-gray-100">
+              Keep all your wishes in one place, neatly organized by category.
+            </p>
+          </div>
+          <div
+            class="feature-card bg-orange-400 text-white rounded-2xl neu-shadow p-6 border-4 border-black"
+          >
+            <div class="text-4xl mb-4 text-white">
+              <i class="fas fa-image"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-2">Visual Tracking</h3>
+            <p class="text-gray-100">
+              Add images to your wishes and visualize your dream items.
+            </p>
+          </div>
+          <div
+            class="feature-card bg-green-400 text-white rounded-2xl neu-shadow p-6 border-4 border-black"
+          >
+            <div class="text-4xl mb-4 text-white">
+              <i class="fas fa-check-double"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-2">Progress Tracking</h3>
+            <p class="text-gray-100">
+              Mark wishes as completed and track your progress over time.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20 bg-pink-400 border-t-4 border-b-4 border-black">
+      <div class="container mx-auto px-4 text-center relative">
+        <h3 class="text-3xl font-bold text-black mb-6">
+          Ready to Start Organizing?
+        </h3>
+        <p class="text-black mb-8 max-w-2xl mx-auto">
+          Join WishGrid and never lose track of the things you want.
+        </p>
+        <a
+          href="dashboard.html"
+          class="neu-button bg-white text-pink-600 font-bold py-3 px-8 rounded-lg inline-block"
+          >Get Started Now</a
+        >
+        <div
+          class="bouncing-element"
+          style="left: 40%; width: 70px; height: 70px"
+        >
+          <i class="fas fa-hand-pointer text-amber-500 text-5xl"></i>
+        </div>
+      </div>
+    </section>
+
+    <footer class="bg-black text-white py-10">
+      <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row justify-between">
+          <div class="mb-6 md:mb-0">
+            <div class="flex items-center">
+              <i class="fas fa-gift text-purple-400 text-2xl mr-2"></i>
+              <h2 class="text-xl font-bold">WishGrid</h2>
+            </div>
+            <p class="text-gray-400 mt-2">
+              Track, organize, and visualize your wishes.
+            </p>
+          </div>
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
+            <div>
+              <h3 class="text-lg font-semibold mb-4">Pages</h3>
+              <ul class="space-y-2">
+                <li>
+                  <a href="index.html" class="hover:text-white text-gray-400"
+                    >Home</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="dashboard.html"
+                    class="hover:text-white text-gray-400"
+                    >Dashboard</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="completed.html"
+                    class="hover:text-white text-gray-400"
+                    >Completed</a
+                  >
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="text-lg font-semibold mb-4">More</h3>
+              <ul class="space-y-2">
+                <li>
+                  <a href="about.html" class="hover:text-white text-gray-400"
+                    >About</a
+                  >
+                </li>
+                <li>
+                  <a href="settings.html" class="hover:text-white text-gray-400"
+                    >Settings</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div
+          class="mt-10 pt-6 border-t border-gray-700 text-center text-gray-400"
+        >
+          <p>&copy; 2025 WishGrid. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+    <script src="../js/base-template.js"></script>
+    <script src="../js/theme.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/login.js"></script>
+    <script src="../js/mobile-menu.js"></script>
+    <div
+      id="loginOverlay"
+      class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center p-4"
+    >
+      <div
+        class="bg-white border-4 border-black neu-shadow rounded-xl w-full max-w-md p-6 relative"
+      >
+        <button id="closeLogin" class="absolute top-4 right-4 text-2xl">
+          &times;
+        </button>
+        <div id="loginView">
+          <h2 class="text-2xl font-bold mb-6 text-center">Login to WishGrid</h2>
+          <form id="loginForm" class="space-y-4">
+            <div id="loginError" class="hidden text-red-600 text-sm"></div>
+
+            <div>
+              <label class="block text-gray-700 mb-2">Email</label>
+              <input
+                type="email"
+                name="email"
+                required
+                class="w-full border-2 border-black p-2 rounded-lg"
+              />
+            </div>
+            <div>
+              <label class="block text-gray-700 mb-2">Password</label>
+              <input
+                type="password"
+                name="password"
+                required
+                class="w-full border-2 border-black p-2 rounded-lg"
+              />
+            </div>
+            <button
+              type="submit"
+              class="w-full neu-button bg-purple-600 hover:bg-purple-700 text-white py-3 px-4 rounded-lg"
+            >
+              Log In
+            </button>
+            <p class="text-center text-sm mt-4">
+              Don't have an account?
+              <button
+                type="button"
+                id="showSignup"
+                class="text-purple-600 font-bold"
+              >
+                Sign up
+              </button>
+            </p>
+          </form>
+        </div>
+        <div id="signupView" class="hidden">
+          <h2 class="text-2xl font-bold mb-6 text-center">Create Account</h2>
+          <form id="signupForm" class="space-y-4">
+            <div id="signupError" class="hidden text-red-600 text-sm"></div>
+
+            <div>
+              <label class="block text-gray-700 mb-2">Email</label>
+              <input
+                type="email"
+                name="email"
+                required
+                class="w-full border-2 border-black p-2 rounded-lg"
+              />
+            </div>
+            <div>
+              <label class="block text-gray-700 mb-2">Username</label>
+              <input
+                type="text"
+                name="username"
+                required
+                minlength="3"
+                maxlength="30"
+                class="w-full border-2 border-black p-2 rounded-lg"
+              />
+              <p class="text-xs text-gray-500 mt-1">
+                Between 3 and 30 characters
+              </p>
+            </div>
+            <div>
+              <label class="block text-gray-700 mb-2">Password</label>
+              <input
+                type="password"
+                name="password"
+                required
+                minlength="8"
+                class="w-full border-2 border-black p-2 rounded-lg"
+              />
+              <p class="text-xs text-gray-500 mt-1">Minimum 8 characters</p>
+            </div>
+            <button
+              type="submit"
+              class="w-full neu-button bg-purple-600 hover:bg-purple-700 text-white py-3 px-4 rounded-lg"
+            >
+              Sign Up
+            </button>
+            <p class="text-center text-sm mt-4">
+              Already have an account?
+              <button
+                type="button"
+                id="showLogin"
+                class="text-purple-600 font-bold"
+              >
+                Log in
+              </button>
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

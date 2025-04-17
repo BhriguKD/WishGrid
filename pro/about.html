@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About - WishGrid</title>
+    <link href="../src/output.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
+      body {
+        font-family: "Inter", sans-serif;
+        background: #f0f0f0;
+      }
+      .neu-shadow {
+        box-shadow: 8px 8px 0px #000;
+      }
+      .neu-button {
+        transition: all 0.2s ease;
+        box-shadow: 8px 8px 0px #000;
+        border: 4px solid #000;
+      }
+      .neu-button:hover {
+        transform: translate(2px, 2px);
+        box-shadow: 4px 4px 0px #000;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white border-b-4 border-black py-4">
+      <div class="container mx-auto px-4 flex justify-between items-center">
+        <div class="flex items-center">
+          <i class="fas fa-gift text-purple-600 text-2xl mr-2"></i>
+          <h1 class="text-2xl font-bold text-gray-800">WishGrid</h1>
+        </div>
+        <!-- Desktop Menu -->
+        <div class="hidden md:flex space-x-6 font-bold">
+          <a href="index.html" class="hover:text-purple-600">Home</a>
+          <a
+            href="dashboard.html"
+            class="hover:text-purple-600 auth-required hidden"
+            >Dashboard</a
+          >
+          <a
+            href="completed.html"
+            class="hover:text-purple-600 auth-required hidden"
+            >Completed</a
+          >
+          <a href="about.html" class="text-purple-600">About</a>
+          <a
+            href="settings.html"
+            class="hover:text-purple-600 auth-required hidden"
+            >Settings</a
+          >
+          <button
+            id="logoutButton"
+            class="hover:text-purple-600 auth-required hidden"
+          >
+            Logout
+          </button>
+        </div>
+        <!-- Mobile Menu Button -->
+        <div class="md:hidden">
+          <button
+            id="mobile-menu-button"
+            class="text-gray-800 hover:text-purple-600 focus:outline-none"
+          >
+            <i class="fas fa-bars text-xl"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Menu Panel -->
+      <div id="mobile-menu" class="hidden md:hidden">
+        <div
+          class="px-4 pt-2 pb-3 space-y-3 bg-white border-t-2 border-gray-200"
+        >
+          <a
+            href="index.html"
+            class="block py-2 text-base font-bold hover:text-purple-600"
+            >Home</a
+          >
+          <a
+            href="dashboard.html"
+            class="block py-2 text-base font-bold hover:text-purple-600 auth-required hidden"
+            >Dashboard</a
+          >
+          <a
+            href="completed.html"
+            class="block py-2 text-base font-bold hover:text-purple-600 auth-required hidden"
+            >Completed</a
+          >
+          <a
+            href="about.html"
+            class="block py-2 text-base font-bold text-purple-600"
+            >About</a
+          >
+          <a
+            href="settings.html"
+            class="block py-2 text-base font-bold hover:text-purple-600 auth-required hidden"
+            >Settings</a
+          >
+          <button
+            id="logoutButtonMobile"
+            class="block py-2 text-base font-bold hover:text-purple-600 auth-required hidden"
+          >
+            Logout
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Header Section -->
+    <section class="py-16 bg-purple-600 border-b-4 border-black">
+      <div class="container mx-auto px-4 text-center">
+        <h2 class="text-4xl font-bold text-white mb-4">About WishGrid</h2>
+        <p class="text-white text-xl max-w-2xl mx-auto">
+          The journey from wishing to having, visualized.
+        </p>
+      </div>
+    </section>
+
+    <!-- Story Section -->
+    <section class="py-16">
+      <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row gap-12 items-center">
+          <div class="md:w-1/2">
+            <div
+              class="border-4 border-black rounded-xl neu-shadow overflow-hidden"
+            >
+              <img
+                src="../assets/images/WishGridStory.png"
+                alt="WishGrid Story"
+                class="w-full"
+              />
+            </div>
+          </div>
+          <div class="md:w-1/2 space-y-6">
+            <h3 class="text-3xl font-bold text-gray-800">Our Story</h3>
+            <p class="text-gray-700">
+              WishGrid was born out of a simple observation: in the age of
+              endless online shopping options, keeping track of what we want
+              becomes overwhelming. How many times have you found the perfect
+              item, only to forget about it weeks later?
+            </p>
+            <p class="text-gray-700">
+              We created WishGrid in 2025 as a visual solution to this problem.
+              Our platform helps you organize everything you want in one
+              beautiful, customizable grid - making your wishes more tangible
+              and organized.
+            </p>
+            <p class="text-gray-700">
+              Whether you're saving for big purchases, planning gifts, or just
+              keeping track of your personal wishlist, WishGrid turns abstract
+              desires into a visual journey you can track, prioritize, and
+              achieve.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="py-16 bg-gray-100">
+      <div class="container mx-auto px-4">
+        <h3 class="text-3xl font-bold text-center text-gray-800 mb-12">
+          How WishGrid Works
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="bg-white border-4 border-black p-6 neu-shadow">
+            <div class="text-3xl mb-4">📝</div>
+            <h4 class="text-xl font-bold mb-2">1. Add Your Wishes</h4>
+            <p class="text-gray-700">
+              Create cards for items you want. Add photos, descriptions, prices,
+              and links.
+            </p>
+          </div>
+          <div class="bg-yellow-200 border-4 border-black p-6 neu-shadow">
+            <div class="text-3xl mb-4">🗂️</div>
+            <h4 class="text-xl font-bold mb-2">2. Organize & Prioritize</h4>
+            <p class="text-gray-700">
+              Categorize your wishes and set priority levels to help with
+              decision making.
+            </p>
+          </div>
+          <div class="bg-green-200 border-4 border-black p-6 neu-shadow">
+            <div class="text-3xl mb-4">🎯</div>
+            <h4 class="text-xl font-bold mb-2">3. Track & Achieve</h4>
+            <p class="text-gray-700">
+              Watch your grid evolve as you mark items as acquired or remove
+              them.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="py-16">
+      <div class="container mx-auto px-4">
+        <h3 class="text-3xl font-bold text-center text-gray-800 mb-12">
+          Meet the Team
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <!-- Team Member 1 -->
+          <div
+            class="bg-white border-4 border-black rounded-xl p-6 neu-shadow text-center"
+          >
+            <div
+              class="w-32 h-32 rounded-full bg-rose-400 mx-auto mb-4 overflow-hidden"
+            >
+              <img
+                src="../assets/images/TeamMember1.png"
+                alt="Team Member"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <h4 class="text-xl font-bold text-gray-800">Sneha Singh</h4>
+            <p class="text-purple-600 font-medium mb-3">
+              Founder & Lead Developer
+            </p>
+            <p class="text-gray-700">
+              Created WishGrid as a personal project to solve their own wishlist
+              chaos.
+            </p>
+          </div>
+
+          <!-- Team Member 2 -->
+          <div
+            class="bg-white border-4 border-black rounded-xl p-6 neu-shadow text-center"
+          >
+            <div
+              class="w-32 h-32 rounded-full bg-green-400 mx-auto mb-4 overflow-hidden"
+            >
+              <img
+                src="../assets/images/TeamMember2.png"
+                alt="Team Member"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <h4 class="text-xl font-bold text-gray-800">Anurag Sharma</h4>
+            <p class="text-purple-600 font-medium mb-3">UX Designer</p>
+            <p class="text-gray-700">
+              Passionate about creating intuitive and visually appealing user
+              experiences.
+            </p>
+          </div>
+
+          <!-- Team Member 3 -->
+          <div
+            class="bg-white border-4 border-black rounded-xl p-6 neu-shadow text-center"
+          >
+            <div
+              class="w-32 h-32 rounded-full bg-indigo-400 mx-auto mb-4 overflow-hidden"
+            >
+              <img
+                src="../assets/images/TeamMember3.png"
+                alt="Team Member"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <h4 class="text-xl font-bold text-gray-800">Bhrigu Kumar Deka</h4>
+            <p class="text-purple-600 font-medium mb-3">Backend Developer</p>
+            <p class="text-gray-700">
+              Ensures your data is secure and the application runs smoothly.
+            </p>
+          </div>
+
+          <!-- Team Member 4 -->
+          <div
+            class="bg-white border-4 border-black rounded-xl p-6 neu-shadow text-center"
+          >
+            <div
+              class="w-32 h-32 rounded-full bg-yellow-400 mx-auto mb-4 overflow-hidden"
+            >
+              <img
+                src="../assets/images/TeamMember4.png"
+                alt="Team Member"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <h4 class="text-xl font-bold text-gray-800">Ghushit Kumar Chutia</h4>
+            <p class="text-purple-600 font-medium mb-3">Backend Developer</p>
+            <p class="text-gray-700">
+              Ensures your data is secure and the application runs smoothly.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Technology Section -->
+    <section class="py-16 bg-gray-100">
+      <div class="container mx-auto px-4">
+        <h3 class="text-3xl font-bold text-center text-gray-800 mb-12">
+          Built With
+        </h3>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto">
+          <div
+            class="bg-white border-4 border-black p-4 rounded-xl neu-shadow text-center"
+          >
+            <div class="text-4xl mb-2">
+              <i class="fab fa-html5 text-orange-500"></i>
+            </div>
+            <h5 class="font-bold">HTML5</h5>
+          </div>
+          <div
+            class="bg-white border-4 border-black p-4 rounded-xl neu-shadow text-center"
+          >
+            <div class="text-4xl mb-2">
+              <i class="fab fa-css3-alt text-blue-500"></i>
+            </div>
+            <h5 class="font-bold">CSS3/Tailwind</h5>
+          </div>
+          <div
+            class="bg-white border-4 border-black p-4 rounded-xl neu-shadow text-center"
+          >
+            <div class="text-4xl mb-2">
+              <i class="fab fa-js text-yellow-500"></i>
+            </div>
+            <h5 class="font-bold">JavaScript</h5>
+          </div>
+          <div
+            class="bg-white border-4 border-black p-4 rounded-xl neu-shadow text-center"
+          >
+            <div class="text-4xl mb-2">
+              <i class="fab fa-php text-purple-500"></i>
+            </div>
+            <h5 class="font-bold">PHP/MySQL</h5>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-16">
+      <div class="container mx-auto px-4">
+        <h3 class="text-3xl font-bold text-center text-gray-800 mb-12">
+          Frequently Asked Questions
+        </h3>
+        <div class="max-w-3xl mx-auto space-y-6">
+          <!-- FAQ Item 1 -->
+          <div class="bg-white border-4 border-black p-6 rounded-xl neu-shadow">
+            <h4 class="text-xl font-bold text-gray-800 mb-2">
+              Is WishGrid free to use?
+            </h4>
+            <p class="text-gray-700">
+              Yes! WishGrid is completely free for all users. We may introduce
+              premium features in the future, but the core functionality will
+              always remain free.
+            </p>
+          </div>
+
+          <!-- FAQ Item 2 -->
+          <div class="bg-white border-4 border-black p-6 rounded-xl neu-shadow">
+            <h4 class="text-xl font-bold text-gray-800 mb-2">
+              Can I share my wishlist with others?
+            </h4>
+            <p class="text-gray-700">
+              Currently, WishGrid is designed for personal use. However, we're
+              working on sharing features that will be available in upcoming
+              updates.
+            </p>
+          </div>
+
+          <!-- FAQ Item 3 -->
+          <div class="bg-white border-4 border-black p-6 rounded-xl neu-shadow">
+            <h4 class="text-xl font-bold text-gray-800 mb-2">
+              How do I add an item to my wishlist?
+            </h4>
+            <p class="text-gray-700">
+              Simply navigate to your Dashboard and click the "Add New Wish"
+              button. Fill out the form with your item details and save!
+            </p>
+          </div>
+
+          <!-- FAQ Item 4 -->
+          <div class="bg-white border-4 border-black p-6 rounded-xl neu-shadow">
+            <h4 class="text-xl font-bold text-gray-800 mb-2">
+              Is my data secure?
+            </h4>
+            <p class="text-gray-700">
+              We take data security seriously. Your wishlist information is
+              stored securely and is never shared with third parties without
+              your consent.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="py-16 bg-pink-400 border-t-4 border-b-4 border-black">
+      <div class="container mx-auto px-4 text-center">
+        <h3 class="text-3xl font-bold text-black mb-6">Have Questions?</h3>
+        <p class="text-black mb-8 max-w-2xl mx-auto">
+          We'd love to hear from you! Reach out with any questions, suggestions,
+          or feedback.
+        </p>
+        <a
+          href="mailto:contact@wishgrid.com"
+          class="neu-button bg-white text-pink-600 font-bold py-3 px-8 rounded-lg inline-block"
+        >
+          <i class="fas fa-envelope mr-2"></i> Contact Us
+        </a>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white py-10">
+      <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row justify-between">
+          <div class="mb-6 md:mb-0">
+            <div class="flex items-center">
+              <i class="fas fa-gift text-purple-400 text-2xl mr-2"></i>
+              <h2 class="text-xl font-bold">WishGrid</h2>
+            </div>
+            <p class="text-gray-400 mt-2">
+              Track, organize, and visualize your wishes.
+            </p>
+          </div>
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
+            <div>
+              <h3 class="text-lg font-semibold mb-4">Pages</h3>
+              <ul class="space-y-2">
+                <li>
+                  <a href="index.html" class="hover:text-white text-gray-400"
+                    >Home</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="dashboard.html"
+                    class="hover:text-white text-gray-400"
+                    >Dashboard</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="completed.html"
+                    class="hover:text-white text-gray-400"
+                    >Completed</a
+                  >
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="text-lg font-semibold mb-4">More</h3>
+              <ul class="space-y-2">
+                <li>
+                  <a href="about.html" class="hover:text-white text-gray-400"
+                    >About</a
+                  >
+                </li>
+                <li>
+                  <a href="settings.html" class="hover:text-white text-gray-400"
+                    >Settings</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div
+          class="mt-10 pt-6 border-t border-gray-700 text-center text-gray-400"
+        >
+          <p>&copy; 2025 WishGrid. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../js/base-template.js"></script>
+    <script src="../js/theme.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/login.js"></script>
+    <script src="../js/mobile-menu.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        window.WishGrid.initNavigation();
+      });
+    </script>
+  </body>
+</html>
