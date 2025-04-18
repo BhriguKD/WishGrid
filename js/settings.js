@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     const url = window.URL.createObjectURL(blob);
                     const a = document.createElement('a');
                     a.href = url;
-                    a.download = 'wishgrid_data.json';
+                    a.download = 'wishgrid_data.csv';
                     document.body.appendChild(a);
                     a.click();
                     window.URL.revokeObjectURL(url);
@@ -26,34 +26,6 @@ document.addEventListener('DOMContentLoaded', function() {
             } catch (error) {
                 console.error('Export error:', error);
                 alert('Failed to export data. Please try again.');
-            }
-        });
-    }
-
-    const importInput = document.getElementById('import-data');
-    if (importInput) {
-        importInput.addEventListener('change', async function(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-
-            try {
-                const formData = new FormData();
-                formData.append('file', file);
-
-                const response = await fetch('php/import_data.php', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                if (response.ok) {
-                    alert('Data imported successfully!');
-                    window.location.reload();
-                } else {
-                    throw new Error('Import failed');
-                }
-            } catch (error) {
-                console.error('Import error:', error);
-                alert('Failed to import data. Please try again.');
             }
         });
     }
